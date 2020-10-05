@@ -120,11 +120,11 @@ module Enumerable
       counter
     elsif !para.nil? && !block_given?
       counter = 0
-      arr.my_count { |x| counter += 1 if x == para }
+      arr.my_each { |x| counter += 1 if x == para }
       counter
     elsif para.nil? && block_given?
       counter = 0
-      arr.my_count { |x| counter += 1 if yield x }
+      arr.my_each { |x| counter += 1 if yield x }
       counter
     end
   end

@@ -12,7 +12,7 @@ require_relative './lib/enumerables.rb'
 
 #puts [1, 2, 3, 5].my_none? { |num| num < 0 }
 
-#puts [1, 2, 3, 3, 4].count {|x| x % 2 == 0 }
+#puts [1, 2, 3, 3, 4].my_count {|x| x % 2 == 0 }
 
 #puts ['h', 'm', 'a', 'y'].my_map { |x| x.capitalize}
 
