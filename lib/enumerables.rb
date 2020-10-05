@@ -33,4 +33,111 @@ module Enumerable
     temp_arr
   end
 
+  #my_all
+  def my_all?(paramet = nil)
+    arr = self
+    return true if arr.empty?
+    if paramet.nil? && block_given?
+      arr.my_each do |n|
+        ans = yield n
+        return false if ans == false
+      end
+    return true
+    elsif paramet.nil? && !block_given?
+      arr.my_each { |n| return false if n.nil? || !n }
+    return true
+    elsif paramet.is_a?(Regexp)
+      arr.my_each { |x| return false if !x.match(paramet) }
+    return true
+    elsif paramet.is_a?(Module)
+      my_each { |x| return false if x.is_a?(paramet) }
+    return true
+    else
+      my_each { |x| return false if x != paramet }
+    return true
+    end
+    return false
+  end
+
+  #my_any
+  def my_any?(paramet = nil)
+    arr = self
+    return true if arr.empty?
+    if paramet.nil? && block_given?
+      arr.my_each do |n|
+        ans = yield n
+        return true if ans == true
+      end
+    return false
+    elsif paramet.nil? && !block_given?
+      arr.my_each { |n| return true if !n.nil? || n }
+    return false
+    elsif paramet.is_a?(Regexp)
+      arr.my_each { |x| return true if x.match(paramet) }
+    return false
+    elsif paramet.is_a?(Module)
+      my_each { |x| return true if x.is_a?(paramet) }
+    return false
+    else
+      my_each { |x| return true if x == paramet }
+    return false
+    end
+    return false
+  end
+
+  #my_none
+  def my_none?(paramet = nil)
+    arr = self
+    return true if arr.empty?
+    if paramet.nil? && block_given?
+      arr.my_each do |n|
+        ans = yield n
+        return false if ans == true
+      end
+    return true
+    elsif paramet.nil? && !block_given?
+      arr.my_each { |n| return false if !n.nil? || n }
+    return true
+    elsif paramet.is_a?(Regexp)
+      arr.my_each { |x| return false if x.match(paramet) }
+    return true
+    elsif paramet.is_a?(Module)
+      my_each { |x| return false if x.is_a?(paramet) }
+    return true
+    else
+      my_each { |x| return false if x == paramet }
+    return true
+    end
+    return false
+  end
+
+  #my_count
+  def my_count(para = nil)
+    arr = self
+    if para.nil? && !block_given?
+      counter = 0
+      arr.my_count { counter += 1 }
+      counter
+    elsif !para.nil? && !block_given?
+      counter = 0
+      arr.my_count { |x| counter += 1 if x == para }
+      counter
+    elsif para.nil? && block_given?
+      counter = 0
+      arr.my_count { |x| counter += 1 if yield x }
+      counter
+    end
+  end
+
+  #my_map
+  def my_map
+    return to_enum(:my_map) unless block_given?
+    temp_arr=[]
+    arr = self
+    arr.my_each do |num|
+    ans = yield num
+    temp_arr.push(ans)
+    end
+    temp_arr
+  end  
 end
