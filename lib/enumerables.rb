@@ -140,4 +140,28 @@ module Enumerable
     end
     temp_arr
   end  
+
+  #my_inject
+  def my_inject(startt = nil)
+    arr = self
+    if startt.nil? && block_given?
+      i = 1
+      sum = arr[0]
+      while i < arr.length
+        sum = yield sum, arr[i]
+        i += 1
+      end
+      sum
+    elsif !startt.nil? && block_given?
+      i = 0
+      sum = startt
+      while i < arr.length
+        sum = yield sum, arr[i]
+        i += 1
+      end
+      sum
+    else
+      0
+    end
+  end
 end
