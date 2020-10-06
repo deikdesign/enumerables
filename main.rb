@@ -16,4 +16,6 @@ require_relative './lib/enumerables.rb'
 
 #puts ['h', 'm', 'a', 'y'].my_map { |x| x.capitalize}
 
-puts [1, 2, 3, 4, 5].my_inject(3) { |sum, num| sum + num }
+#puts [1, 2, 3, 4, 5].my_inject(3) { |sum, num| sum + num }
+
+puts multiply_els ([2, 4, 5]) 

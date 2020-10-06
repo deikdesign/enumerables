@@ -164,4 +164,11 @@ module Enumerable
       0
     end
   end
+  #multiply_els
+def multiply_els (arg = nil)
+  if arg.nil?
+    return to_enum(:my_map)
+  end
+  return arg.my_inject {|x, n| x*n}
+end
 end
