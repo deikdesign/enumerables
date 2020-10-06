@@ -51,7 +51,7 @@ module Enumerable
       arr.my_each { |n| return false if n.nil? || !n }
     return true
     elsif paramet.is_a?(Regexp)
-      arr.my_each { |x| return false if !x.match(paramet) }
+      arr.my_each { |x| return false unless x.match(paramet) }
     return true
     elsif paramet.is_a?(Module)
       my_each { |x| return false if x.is_a?(paramet) }
@@ -67,6 +67,7 @@ module Enumerable
   def my_any?(paramet = nil)
     arr = self
     return true if arr.empty?
+
     if paramet.nil? && block_given?
       arr.my_each do |n|
         ans = yield n
@@ -93,6 +94,7 @@ module Enumerable
   def my_none?(paramet = nil)
     arr = self
     return true if arr.empty?
+
     if paramet.nil? && block_given?
       arr.my_each do |n|
         ans = yield n
