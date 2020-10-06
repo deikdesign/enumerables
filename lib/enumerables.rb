@@ -38,29 +38,24 @@ module Enumerable
 
   # my_all
   def my_all?(paramet = nil)
+    arr = self
     return true if arr.empty?
 
-    arr = self
     if paramet.nil? && block_given?
       arr.my_each do |n|
         ans = yield n
         return false if ans == false
       end
-    return true
     elsif paramet.nil? && !block_given?
       arr.my_each { |n| return false if n.nil? || !n }
-    return true
     elsif paramet.is_a?(Regexp)
       arr.my_each { |x| return false unless x.match(paramet) }
-    return true
     elsif paramet.is_a?(Module)
       my_each { |x| return false if x.is_a?(paramet) }
-    return true
     else
       my_each { |x| return false if x != paramet }
-    return true
     end
-    return false
+    true
   end
 
   # my_any
@@ -73,21 +68,16 @@ module Enumerable
         ans = yield n
         return true if ans == true
       end
-    return false
     elsif paramet.nil? && !block_given?
-      arr.my_each { |n| return true if !n.nil? || n }
-    return false
+      arr.my_each { |n| return true if !!n == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
       arr.my_each { |x| return true if x.match(paramet) }
-    return false
     elsif paramet.is_a?(Module)
       my_each { |x| return true if x.is_a?(paramet) }
-    return false
     else
       my_each { |x| return true if x == paramet }
-    return false
     end
-    return false
+    false
   end
 
   # my_none
@@ -100,21 +90,14 @@ module Enumerable
         ans = yield n
         return false if ans == true
       end
-    return true
     elsif paramet.nil? && !block_given?
-      arr.my_each { |n| return false if !n.nil? || n }
-    return true
+      arr.my_each { |n| return false if !!n == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
       arr.my_each { |x| return false if x.match(paramet) }
-    return true
     elsif paramet.is_a?(Module)
       my_each { |x| return false if x.is_a?(paramet) }
-    return true
-    else
-      my_each { |x| return false if x == paramet }
-    return true
     end
-    return false
+    true
   end
 
   # my_count
