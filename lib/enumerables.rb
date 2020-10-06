@@ -1,7 +1,8 @@
 module Enumerable
-  #my_each
+  # my_each
   def my_each
     return to_enum(:my_each) unless block_given?
+
     arr = self
     i = 0
     while i < arr.length
@@ -13,6 +14,7 @@ module Enumerable
   #my_each_with_index 
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
+
     arr = self
     i = 0
     while i < arr.length
@@ -24,11 +26,12 @@ module Enumerable
   #my_select
   def my_select
     return to_enum(:my_select) unless block_given?
+
     temp_arr=[]
     arr = self
     arr.my_each do |num|
-    ans = yield num
-    temp_arr.push(num) if ans == true
+      ans = yield num
+      temp_arr.push(num) if ans == true
     end
     temp_arr
   end
@@ -37,6 +40,7 @@ module Enumerable
   def my_all?(paramet = nil)
     arr = self
     return true if arr.empty?
+
     if paramet.nil? && block_given?
       arr.my_each do |n|
         ans = yield n
@@ -132,6 +136,7 @@ module Enumerable
   #my_map
   def my_map(proc = nil)
     return to_enum unless block_given? || proc
+
     arr = self
     new_arr = []
     if proc
