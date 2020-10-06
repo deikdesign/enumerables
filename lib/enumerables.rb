@@ -1,3 +1,4 @@
+# rubocop:disable Style/CaseEquality 
 module Enumerable
   # my_each
   def my_each
@@ -11,7 +12,7 @@ module Enumerable
     end
   end
 
-  #my_each_with_index 
+  # my_each_with_index 
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
 
@@ -23,11 +24,11 @@ module Enumerable
     end
   end
 
-  #my_select
+  # my_select
   def my_select
     return to_enum(:my_select) unless block_given?
 
-    temp_arr=[]
+    temp_arr = []
     arr = self
     arr.my_each do |num|
       ans = yield num
@@ -36,11 +37,11 @@ module Enumerable
     temp_arr
   end
 
-  #my_all
+  # my_all
   def my_all?(paramet = nil)
-    arr = self
     return true if arr.empty?
 
+    arr = self
     if paramet.nil? && block_given?
       arr.my_each do |n|
         ans = yield n
@@ -63,7 +64,7 @@ module Enumerable
     return false
   end
 
-  #my_any
+  # my_any
   def my_any?(paramet = nil)
     arr = self
     return true if arr.empty?
@@ -89,7 +90,7 @@ module Enumerable
     return false
   end
 
-  #my_none
+  # my_none
   def my_none?(paramet = nil)
     arr = self
     return true if arr.empty?
@@ -115,7 +116,7 @@ module Enumerable
     return false
   end
 
-  #my_count
+  # my_count
   def my_count(para = nil)
     arr = self
     if para.nil? && !block_given?
@@ -133,7 +134,7 @@ module Enumerable
     end
   end
 
-  #my_map
+  # my_map
   def my_map(proc = nil)
     return to_enum unless block_given? || proc
 
@@ -147,7 +148,7 @@ module Enumerable
     new_arr
   end
 
-  #my_inject
+  # my_inject
   def my_inject(startt = nil)
     arr = self
     if startt.nil? && block_given?
@@ -173,6 +174,7 @@ module Enumerable
 end
 
 public
+
 def multiply_els(arr)
   arr.my_inject { |result, element| result * element }
 end
