@@ -130,16 +130,17 @@ module Enumerable
   end
 
   #my_map
-  def my_map
-    return to_enum(:my_map) unless block_given?
-    temp_arr=[]
+  def my_map(proc = nil)
+    return to_enum unless block_given? || proc
     arr = self
-    arr.my_each do |num|
-    ans = yield num
-    temp_arr.push(ans)
+    new_arr = []
+    if proc
+      arr.my_each { |num| new_arr.push(proc.call(num)) }
+    else
+      arr.my_each { |num| new_arr.push(yield(num)) }
     end
-    temp_arr
-  end  
+    new_arr
+  end
 
   #my_inject
   def my_inject(startt = nil)
@@ -164,11 +165,9 @@ module Enumerable
       0
     end
   end
-  #multiply_els
-def multiply_els (arg = nil)
-  if arg.nil?
-    return to_enum(:my_map)
-  end
-  return arg.my_inject {|x, n| x*n}
 end
+
+public
+def multiply_els(arr)
+  arr.my_inject { |result, element| result * element }
 end

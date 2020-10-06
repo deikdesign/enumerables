@@ -8,7 +8,7 @@ require_relative './lib/enumerables.rb'
 
 #puts [1, 2, 3, 5].my_all? { |num| num > 0 }
 
-#puts [1, 2, 3, 5].my_any? { |num| num == 3 }
+#puts [1, 2, 3, 5].my_any? multiply_els{ |num| num == 3 }
 
 #puts [1, 2, 3, 5].my_none? { |num| num < 0 }
 
@@ -16,6 +16,6 @@ require_relative './lib/enumerables.rb'
 
 #puts ['h', 'm', 'a', 'y'].my_map { |x| x.capitalize}
 
-#puts [1, 2, 3, 4, 5].my_inject(3) { |sum, num| sum + num }
+#puts [1, 2, 3, 4, 5].my_inject { |sum, num| sum + num }
 
-puts multiply_els ([2, 4, 5]) 
+#puts multiply_els([2, 4, 5])
