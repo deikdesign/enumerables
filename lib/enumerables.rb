@@ -1,4 +1,3 @@
-# rubocop:disable Style/CaseEquality 
 module Enumerable
   # my_each
   def my_each
