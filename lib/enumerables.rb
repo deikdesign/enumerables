@@ -1,39 +1,56 @@
 module Enumerable
   # my_each
-  def my_each
-    return to_enum(:my_each) unless block_given?
-
+  def my_each(&block)
     arr = self
-    i = 0
-    while i < arr.length
-      yield arr[i]
-      i += 1
+    arr = arr.to_a if self.class == Range || arr.is_a?(Hash)
+    count = 0
+    if arr.is_a?(Hash)
+      while count < arr.length
+        yield arr[i][0], arr[i][1]
+        count += 1
+      end
+      self
+    elsif block
+      while count < arr.length
+        yield arr[count]
+        count += 1
+      end
+      self
+    else
+      "\#<Enumerator: #{self}:my_each>"
     end
   end
 
   # my_each_with_index
-  def my_each_with_index
-    return to_enum(:my_each_with_index) unless block_given?
-
+  def my_each_with_index(&block)
     arr = self
-    i = 0
-    while i < arr.length
-      yield arr[i], i
-      i += 1
+    arr = arr.to_a if self.class == Range || arr.is_a?(Hash)
+    count = 0
+    if arr.is_a?(Hash)
+      while count < arr.length
+        yield arr[i], count
+        count += 1
+      end
+      self
+    elsif block
+      while count < arr.length
+        yield arr[count], count
+        count += 1
+      end
+      self
+    else
+      "\#<Enumerator: #{self}:my_each_with_index>"
     end
   end
 
   # my_select
-  def my_select
-    return to_enum(:my_select) unless block_given?
+  def my_select(&block)
+    return "\#<Enumerator: #{self}:my_select>" unless block
 
-    temp_arr = []
-    arr = self
-    arr.my_each do |num|
-      ans = yield num
-      temp_arr.push(num) if ans == true
-    end
-    temp_arr
+    
+    temp = []
+    self.my_each { |num| temp.push(num) if yield(num) }
+    temp
   end
 
   # my_all
