@@ -1,21 +1,31 @@
 require_relative './lib/enumerables.rb'
 
+puts '1-Test for My_each'
 [1, 2, 3, 4].my_each { |num| puts num }
 
+puts '2-Test for my_each_with_index'
 [1, 2, 3, 4].my_each_with_index { |val, ind| puts "for #{ind} index- value is #{val}" }
 
-puts [1, 2, 3, 4].my_select { |num| num.even? }
+puts '3-Test for my_select'
+puts [1, 2, 3, 4].my_select { |num| (num % 2).zero? }
 
-puts [1, 2, 3, 5].my_all? { |num| num < 0 }
+puts '4-Test for my_all'
+puts [1, 2, 3, 5].my_all? { |num| num >= 1 }
 
+puts '5-Test for my_any'
 puts [false, true].my_any?
 
+puts '6-Test for my_none'
 puts [1, 2, 3, 5].my_none? { |num| num < 1 }
 
-puts [1, 2, 3, 3, 4].my_count {|x| x % 2 == 0 }
+puts '7-Test for my_count'
+puts [1, 2, 3, 3, 4].my_count { |x| (x % 2).zero? }
 
-puts ['h', 'm', 'a', 'y'].my_map { |x| x.capitalize}
+puts '8-Test for my_map'
+puts %w[h m a y].my_map { |x| x + '1' }
 
+puts '9-Test for my_inject'
 puts [1, 2, 3, 4, 5].my_inject { |sum, num| sum + num }
 
+puts '10-Test for multiply_els'
 puts multiply_els([2, 4, 5])
