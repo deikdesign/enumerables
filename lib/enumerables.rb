@@ -2,7 +2,7 @@ module Enumerable
   # my_each
   def my_each(&block)
     arr = self
-    arr = arr.to_a if self.class == Range || arr.is_a?(Hash)
+    arr = arr.to_a
     count = 0
     if arr.is_a?(Hash)
       while count < arr.length
