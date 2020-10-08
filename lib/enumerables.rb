@@ -119,6 +119,7 @@ module Enumerable
 
   # my_none
   def my_none?(paramet = nil)
+    an = true
     arr = self
     arr = arr.to_a
     return true if arr.empty?
@@ -129,8 +130,16 @@ module Enumerable
         return false if ans == true
       end
     elsif paramet.nil?
-      arr.my_each { |n| return false if !n.nil? == true && !n.nil? }
-    elsif paramet.is_a?(Regexp)
+      arr.my_each { |n| return false if !n == false && !n.nil? }
+    else
+      an = check_class(paramet, arr)
+    end
+    an
+  end
+
+  # my_method3
+  def check_class(paramet, arr)
+    if paramet.is_a?(Regexp)
       arr.my_each { |x| return false if x.match?(paramet) }
     elsif paramet.is_a?(Class)
       arr.my_each { |x| return false if x.is_a?(paramet) }
@@ -144,19 +153,15 @@ module Enumerable
   def my_count(para = nil)
     arr = self
     arr = arr.to_a
-    if para.nil? && !block_given?
-      counter = 0
-      arr.my_count { counter += 1 }
-      counter
-    elsif !para.nil? && !block_given?
-      counter = 0
-      arr.my_each { |x| counter += 1 if x == para }
-      counter
-    elsif para.nil? && block_given?
-      counter = 0
+    counter = 0
+    if block_given?
       arr.my_each { |x| counter += 1 if yield x }
-      counter
+    elsif !para.nil?
+      arr.my_each { |x| counter += 1 if x == para }
+    else
+      arr.my_count { counter += 1 }
     end
+    counter
   end
 
   # my_map
@@ -176,7 +181,7 @@ module Enumerable
 
   # 9.my_inject
   def my_inject(int = nil, sec = nil)
-    if (!int.nil? && sec.nil?) && (int.is_a?(Symbol) || int.is_a?(String))
+    if check_signs(int, sec)
       sec = int
       int = nil
     end
@@ -186,6 +191,12 @@ module Enumerable
       to_a.my_each { |item| int = int.nil? ? item : yield(int, item) }
     end
     int
+  end
+
+  def check_signs(int, sec)
+    return true if (!int.nil? && sec.nil?) && (int.is_a?(Symbol) || int.is_a?(String))
+
+    false
   end
 end
 
