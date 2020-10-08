@@ -104,8 +104,6 @@ module Enumerable
         ans = yield n
         return true if ans == true
       end
-    elsif paramet.nil?
-      arr.my_each { |n| return true if !n == false && !n.nil? }
     else
       an = check_other(paramet, arr)
     end
@@ -114,6 +112,16 @@ module Enumerable
 
   # my_method2
   def check_other(paramet, arr)
+    an = false
+    if paramet.nil?
+      arr.my_each { |n| return true if !n == false && !n.nil? }
+    else
+      an = check_other_helper(paramet, arr)
+    end
+    an
+  end
+
+  def check_other_helper(paramet, arr)
     if paramet.is_a?(Regexp)
       arr.my_each { |x| return true if x.match?(paramet) }
     elsif paramet.is_a?(Class)
@@ -136,8 +144,6 @@ module Enumerable
         ans = yield n
         return false if ans == true
       end
-    elsif paramet.nil?
-      arr.my_each { |n| return false if !n == false && !n.nil? }
     else
       an = check_class(paramet, arr)
     end
@@ -146,6 +152,16 @@ module Enumerable
 
   # my_method3
   def check_class(paramet, arr)
+    an = false
+    if paramet.nil?
+      arr.my_each { |n| return false if !n == false && !n.nil? }
+    else
+      an = check_class_helper(paramet, arr)
+    end
+    an
+  end
+
+  def check_class_helper(paramet, arr)
     if paramet.is_a?(Regexp)
       arr.my_each { |x| return false if x.match?(paramet) }
     elsif paramet.is_a?(Class)
