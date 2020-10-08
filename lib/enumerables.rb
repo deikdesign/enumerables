@@ -47,30 +47,30 @@ module Enumerable
   def my_select(&block)
     return "\#<Enumerator: #{self}:my_select>" unless block
 
-    
     temp = []
-    self.my_each { |num| temp.push(num) if yield(num) }
+    to_a.my_each { |num| temp.push(num) if yield(num) }
     temp
   end
 
   # my_all
   def my_all?(paramet = nil)
     arr = self
+    arr = arr.to_a
     return true if arr.empty?
 
-    if paramet.nil? && block_given?
+    if block_given?
       arr.my_each do |n|
         ans = yield n
         return false if ans == false
       end
-    elsif paramet.nil? && !block_given?
+    elsif paramet.nil?
       arr.my_each { |n| return false if n.nil? || !n }
     elsif paramet.is_a?(Regexp)
-      arr.my_each { |x| return false unless x.match(paramet) }
-    elsif paramet.is_a?(Module)
-      my_each { |x| return false if x.is_a?(paramet) }
+      arr.my_each { |x| return false unless x.include?(paramet) }
+    elsif paramet.is_a?(Class)
+      arr.my_each { |x| return false unless x.is_a?(paramet) }
     else
-      my_each { |x| return false if x != paramet }
+      arr.my_each { |x| return false if x != paramet }
     end
     true
   end
@@ -78,21 +78,22 @@ module Enumerable
   # my_any
   def my_any?(paramet = nil)
     arr = self
+    arr = arr.to_a
     return true if arr.empty?
 
-    if paramet.nil? && block_given?
+    if block_given?
       arr.my_each do |n|
         ans = yield n
         return true if ans == true
       end
-    elsif paramet.nil? && !block_given?
+    elsif paramet.nil?
       arr.my_each { |n| return true if !!n == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
       arr.my_each { |x| return true if x.match(paramet) }
-    elsif paramet.is_a?(Module)
-      my_each { |x| return true if x.is_a?(paramet) }
+    elsif paramet.is_a?(Class)
+      arr.my_each { |x| return true if x.include?(paramet) }
     else
-      my_each { |x| return true if x == paramet }
+      arr.my_each { |x| return true if x == paramet }
     end
     false
   end
@@ -100,19 +101,22 @@ module Enumerable
   # my_none
   def my_none?(paramet = nil)
     arr = self
+    arr = arr.to_a
     return true if arr.empty?
 
-    if paramet.nil? && block_given?
+    if block_given?
       arr.my_each do |n|
         ans = yield n
         return false if ans == true
       end
-    elsif paramet.nil? && !block_given?
+    elsif paramet.nil?
       arr.my_each { |n| return false if !!n == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
       arr.my_each { |x| return false if x.match(paramet) }
-    elsif paramet.is_a?(Module)
-      my_each { |x| return false if x.is_a?(paramet) }
+    elsif paramet.is_a?(Class)
+      arr.my_each { |x| return false if x.include?(paramet) }
+    else
+      arr.my_each { |x| return false if x == paramet }
     end
     true
   end
@@ -120,6 +124,7 @@ module Enumerable
   # my_count
   def my_count(para = nil)
     arr = self
+    arr = arr.to_a
     if para.nil? && !block_given?
       counter = 0
       arr.my_count { counter += 1 }
@@ -140,6 +145,7 @@ module Enumerable
     return to_enum unless block_given? || proc
 
     arr = self
+    arr = arr.to_a
     new_arr = []
     if proc
       arr.my_each { |num| new_arr.push(proc.call(num)) }
@@ -149,28 +155,18 @@ module Enumerable
     new_arr
   end
 
-  # my_inject
-  def my_inject(startt = nil)
-    arr = self
-    if startt.nil? && block_given?
-      i = 1
-      sum = arr[0]
-      while i < arr.length
-        sum = yield sum, arr[i]
-        i += 1
-      end
-      sum
-    elsif !startt.nil? && block_given?
-      i = 0
-      sum = startt
-      while i < arr.length
-        sum = yield sum, arr[i]
-        i += 1
-      end
-      sum
-    else
-      0
+  # 9.my_inject
+  def my_inject(int = nil, sec = nil)
+    if (!int.nil? && sec.nil?) && (int.is_a?(Symbol) || int.is_a?(String))
+      sec = int
+      int = nil
     end
+    if !block_given? && !sec.nil?
+      to_a.my_each { |item| int = int.nil? ? item : int.send(sec, item) }
+    else
+      to_a.my_each { |item| int = int.nil? ? item : yield(int, item) }
+    end
+    int
   end
 end
 
