@@ -23,7 +23,7 @@ module Enumerable
   # my_each_with_index
   def my_each_with_index(&block)
     arr = self
-    arr = arr.to_a if self.class == Range || arr.is_a?(Hash)
+    arr = arr.to_a
     count = 0
     if arr.is_a?(Hash)
       while count < arr.length
@@ -64,16 +64,24 @@ module Enumerable
         ans = yield n
         return false if ans == false
       end
-    elsif paramet.nil?
-      arr.my_each { |n| return false if n.nil? || !n }
     else
       an = check_regx(paramet, arr)
     end
     an
   end
 
-  # my_methods
+  # my_method1
   def check_regx(paramet, arr)
+    an = flase
+    if paramet.nil?
+      arr.my_each { |n| return false if n.nil? || !n }
+    else
+      an = check_regx_other(paramet, arr)
+    end
+    an
+  end
+
+  def check_regx_other(paramet, arr)
     if paramet.is_a?(Regexp)
       arr.my_each { |x| return false unless x.match?(paramet) }
     elsif paramet.is_a?(Class)
