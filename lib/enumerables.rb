@@ -1,3 +1,4 @@
+# rubocop:disable Style/CaseEquality
 module Enumerable
   # my_each
   def my_each(&block)
@@ -111,7 +112,7 @@ module Enumerable
         return false if ans == true
       end
     elsif paramet.nil?
-      arr.my_each { |n| return false if !!n == true && !n.nil? }
+      arr.my_each { |n| return false if !n.nil? == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
       arr.my_each { |x| return false if x.match?(paramet) }
     elsif paramet.is_a?(Class)
