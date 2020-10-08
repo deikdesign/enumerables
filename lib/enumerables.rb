@@ -88,7 +88,7 @@ module Enumerable
         return true if ans == true
       end
     elsif paramet.nil?
-      arr.my_each { |n| return true if !!n == true && !n.nil? }
+      arr.my_each { |n| return false if !n.nil? == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
       arr.my_each { |x| return true if x.match?(paramet) }
     elsif paramet.is_a?(Class)
