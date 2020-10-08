@@ -16,9 +16,8 @@ module Enumerable
         count += 1
       end
       self
-    else
-      arr.to_enum
     end
+    arr.to_enum
   end
 
   # my_each_with_index
