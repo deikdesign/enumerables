@@ -55,6 +55,7 @@ module Enumerable
 
   # my_all
   def my_all?(paramet = nil)
+    an = true
     arr = self
     arr = arr.to_a
     return true if arr.empty?
@@ -66,7 +67,15 @@ module Enumerable
       end
     elsif paramet.nil?
       arr.my_each { |n| return false if n.nil? || !n }
-    elsif paramet.is_a?(Regexp)
+    else
+      an = check_regx(paramet, arr)
+    end
+    an
+  end
+
+  # my_methods
+  def check_regx(paramet, arr)
+    if paramet.is_a?(Regexp)
       arr.my_each { |x| return false unless x.match?(paramet) }
     elsif paramet.is_a?(Class)
       arr.my_each { |x| return false unless x.is_a?(paramet) }
@@ -78,6 +87,7 @@ module Enumerable
 
   # my_any
   def my_any?(paramet = nil)
+    an = false
     arr = self
     arr = arr.to_a
     return true if arr.empty?
@@ -88,8 +98,16 @@ module Enumerable
         return true if ans == true
       end
     elsif paramet.nil?
-      arr.my_each { |n| return false if !n.nil? == true && !n.nil? }
-    elsif paramet.is_a?(Regexp)
+      arr.my_each { |n| return true if !n == false && !n.nil? }
+    else
+      an = check_other(paramet, arr)
+    end
+    an
+  end
+
+  # my_method2
+  def check_other(paramet, arr)
+    if paramet.is_a?(Regexp)
       arr.my_each { |x| return true if x.match?(paramet) }
     elsif paramet.is_a?(Class)
       arr.my_each { |x| return true if x.is_a?(paramet) }
