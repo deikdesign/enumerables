@@ -17,7 +17,7 @@ module Enumerable
       end
       self
     else
-      "\#<Enumerator: #{self}:my_each>"
+      arr.to_enum
     end
   end
 
@@ -39,16 +39,17 @@ module Enumerable
       end
       self
     else
-      "\#<Enumerator: #{self}:my_each_with_index>"
+      arr.to_enum
     end
   end
 
   # my_select
   def my_select(&block)
-    return "\#<Enumerator: #{self}:my_select>" unless block
+    arr = self
+    return arr.to_enum unless block
 
     temp = []
-    to_a.my_each { |num| temp.push(num) if yield(num) }
+    arr.my_each { |num| temp.push(num) if yield(num) }
     temp
   end
 
@@ -66,7 +67,7 @@ module Enumerable
     elsif paramet.nil?
       arr.my_each { |n| return false if n.nil? || !n }
     elsif paramet.is_a?(Regexp)
-      arr.my_each { |x| return false unless x.include?(paramet) }
+      arr.my_each { |x| return false unless x.match?(paramet) }
     elsif paramet.is_a?(Class)
       arr.my_each { |x| return false unless x.is_a?(paramet) }
     else
@@ -89,9 +90,9 @@ module Enumerable
     elsif paramet.nil?
       arr.my_each { |n| return true if !!n == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
-      arr.my_each { |x| return true if x.match(paramet) }
+      arr.my_each { |x| return true if x.match?(paramet) }
     elsif paramet.is_a?(Class)
-      arr.my_each { |x| return true if x.include?(paramet) }
+      arr.my_each { |x| return true if x.is_a?(paramet) }
     else
       arr.my_each { |x| return true if x == paramet }
     end
@@ -112,9 +113,9 @@ module Enumerable
     elsif paramet.nil?
       arr.my_each { |n| return false if !!n == true && !n.nil? }
     elsif paramet.is_a?(Regexp)
-      arr.my_each { |x| return false if x.match(paramet) }
+      arr.my_each { |x| return false if x.match?(paramet) }
     elsif paramet.is_a?(Class)
-      arr.my_each { |x| return false if x.include?(paramet) }
+      arr.my_each { |x| return false if x.is_a?(paramet) }
     else
       arr.my_each { |x| return false if x == paramet }
     end
