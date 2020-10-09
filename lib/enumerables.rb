@@ -1,4 +1,4 @@
-module Enumerable
+module Enumerable # rubocop:disable Metrics/ModuleLength
   # my_each
   def my_each(&block)
     arr = self
