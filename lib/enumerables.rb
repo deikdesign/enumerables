@@ -1,6 +1,8 @@
 module Enumerable # rubocop:disable Metrics/ModuleLength
   # my_each
   def my_each(&block)
+    return self.to_enum unless block
+
     arr = self
     arr = arr.to_a
     count = 0
@@ -9,15 +11,13 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         yield arr[i][0], arr[i][1]
         count += 1
       end
-      self
-    elsif block
+    else
       while count < arr.length
         yield arr[count]
         count += 1
       end
-      self
     end
-    arr.to_enum
+    self
   end
 
   # my_each_with_index
