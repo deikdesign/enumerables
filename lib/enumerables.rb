@@ -1,9 +1,9 @@
 module Enumerable # rubocop:disable Metrics/ModuleLength
   # my_each
   def my_each(&block)
-    return self.to_enum unless block
-
     arr = self
+    return arr.to_enum unless block
+
     arr = arr.to_a
     count = 0
     if arr.is_a?(Hash)
@@ -72,9 +72,9 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
 
   # my_method1
   def check_regx(paramet, arr)
-    an = false
+    an = true
     if paramet.nil?
-      arr.my_each { |n| return false if n.nil? || !n }
+      arr.my_each { |n| an = false if n.nil? || !n }
     else
       an = check_regx_other(paramet, arr)
     end
@@ -82,14 +82,15 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   def check_regx_other(paramet, arr)
+    an = true
     if paramet.is_a?(Regexp)
-      arr.my_each { |x| return false unless x.match?(paramet) }
+      arr.my_each { |x| an = false unless x.match?(paramet) }
     elsif paramet.is_a?(Class)
-      arr.my_each { |x| return false unless x.is_a?(paramet) }
+      arr.my_each { |x| an = false unless x.is_a?(paramet) }
     else
-      arr.my_each { |x| return false if x != paramet }
+      arr.my_each { |x| an = false if x != paramet }
     end
-    true
+    an
   end
 
   # my_any

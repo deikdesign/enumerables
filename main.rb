@@ -34,5 +34,3 @@ require_relative './lib/enumerables.rb'
 
 # puts '10-Test for multiply_els'
 # puts multiply_els([2, 4, 5])
-
-p [1,2,3,4].my_each
