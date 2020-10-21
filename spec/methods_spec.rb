@@ -1,10 +1,10 @@
 require '../lib/enumerables.rb'
 
 describe Enumerable do
-    let(:array) { [1, 2, 3, 4, 5]}
-    let(:range) { (0..5) }
-    let(:hash)  { { a: 1. b: 2, c: 3}}
-    let(:my_proc) { proc { |num| num + 1}}
+let(:array) { [1, 2, 3, 4, 5]}
+let(:range) { (0..5) }
+let(:hash)  { { a: 1, b: 2, c: 3} }
+let(:my_proc) { proc { |num| num + 1} }
 
     describe '#my_each' do
          it 'return correct array'
@@ -21,7 +21,7 @@ describe Enumerable do
          end
     end
 
-describe '#my_each_with_index' do
+    describe '#my_each_with_index' do
           it 'return correct array' do
           expect(range.my_each_with_index { |num, index| num}).to eql(hash)
           end
@@ -111,19 +111,19 @@ describe '#my_each_with_index' do
         expect(range.my_none? { |n| n > 2}  ).to eql FALSE
 
         it 'return false when any value is true on a range' do
-            expect(range.my_none? { |n| n > 6}  ).to eql TRUE
+        expect(range.my_none? { |n| n > 6}  ).to eql TRUE
         end
 
         it 'return false when any value is false on a range' do
-            expect(range.my_none? { |n| n > 2}  ).to eql FALSE
+        expect(range.my_none? { |n| n > 2}  ).to eql FALSE
         end
 
         it 'return true when no value is true on a range' do
-            expect(range.my_none? { |key, value| key > 6}  ).to eql TRUE
+        expect(range.my_none? { |key, value| key > 6}  ).to eql TRUE
         end
 
         it 'return true when all values are false on the hash' do
-            expect(range.my_none? { |key, value| key > 6}  ).to eql TRUE
+        expect(range.my_none? { |key, value| key > 6}  ).to eql TRUE
         end
 
     end    
@@ -141,11 +141,11 @@ describe '#my_each_with_index' do
         end
 
         it 'return elements when block is given' do
-            expect(array.my_count? { |x| x == 2}  ).to eql(1)
+        expect(array.my_count? { |x| x == 2}  ).to eql(1)
         end
 
         it 'return elements are equal to arg value' do
-            expect(array.my_count(1)).to eql(1)
+        expect(array.my_count(1)).to eql(1)
         end
     end    
     describe '#my_map?' do
@@ -160,12 +160,11 @@ describe '#my_each_with_index' do
         it 'return to an Enumerator when there is not given block' do
         expect(array.my_map).to be_an(Enumerator)
         end
-    
-        it 'return Proc' do
-        expect(array.my_map(&my_each).to eql([2, 3, 4, 5, 6])
+
+        it 'accepts a proc' do
+        expect(array.my_map(&my_proc)).to eql([2, 3, 4, 5, 6])
         end
 
-        
     end    
 
     describe '#my_inject?' do
@@ -174,8 +173,8 @@ describe '#my_each_with_index' do
         end
 
         it 'inject arr with vlaue and symbol' do
-            expect(array.my_inject(0, :+) ).to eql 15
-            end
+        expect(array.my_inject(0, :+) ).to eql 15
+        end
 
         it 'inject arr with symbol' do
         expect(array.my_inject(:*) ).to eql 120
@@ -190,11 +189,11 @@ describe '#my_each_with_index' do
         end
 
         it 'inject range if the block is given' do
-            expect(range.my_inject { |sum, num| sum + num } ).to eql 15
-            end
+        expect(range.my_inject { |sum, num| sum + num } ).to eql 15
+        end
     
-        it 'inject range if the block is given' do
+        it 'inject enumerator if arg is given' do
         expect(range.my_inject).to be_an(Enumerator)
         end
-    end    
+    end
 end
