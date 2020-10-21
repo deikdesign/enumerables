@@ -2,6 +2,8 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   # my_each
   def my_each(&block)
     arr = self
+    return arr.to_enum unless block
+
     arr = arr.to_a
     count = 0
     if arr.is_a?(Hash)
@@ -9,15 +11,13 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         yield arr[i][0], arr[i][1]
         count += 1
       end
-      self
-    elsif block
+    else
       while count < arr.length
         yield arr[count]
         count += 1
       end
-      self
     end
-    arr.to_enum
+    self
   end
 
   # my_each_with_index
@@ -74,7 +74,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   def check_regx(paramet, arr)
     an = true
     if paramet.nil?
-      arr.my_each { |n| return false if n.nil? || !n }
+      arr.my_each { |n| an = false if n.nil? || !n }
     else
       an = check_regx_other(paramet, arr)
     end
@@ -82,14 +82,15 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   def check_regx_other(paramet, arr)
+    an = true
     if paramet.is_a?(Regexp)
-      arr.my_each { |x| return false unless x.match?(paramet) }
+      arr.my_each { |x| an = false unless x.match?(paramet) }
     elsif paramet.is_a?(Class)
-      arr.my_each { |x| return false unless x.is_a?(paramet) }
+      arr.my_each { |x| an = false unless x.is_a?(paramet) }
     else
-      arr.my_each { |x| return false if x != paramet }
+      arr.my_each { |x| an = false if x != paramet }
     end
-    true
+    an
   end
 
   # my_any
@@ -114,7 +115,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   def check_other(paramet, arr)
     an = false
     if paramet.nil?
-      arr.my_each { |n| return true if !n == false && !n.nil? }
+      arr.my_each { |n| an = true if !n == false && !n.nil? }
     else
       an = check_other_helper(paramet, arr)
     end
@@ -122,14 +123,15 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   def check_other_helper(paramet, arr)
+    an = false
     if paramet.is_a?(Regexp)
-      arr.my_each { |x| return true if x.match?(paramet) }
+      arr.my_each { |x| an = true if x.match?(paramet) }
     elsif paramet.is_a?(Class)
-      arr.my_each { |x| return true if x.is_a?(paramet) }
+      arr.my_each { |x| an = true if x.is_a?(paramet) }
     else
-      arr.my_each { |x| return true if x == paramet }
+      arr.my_each { |x| an = true if x == paramet }
     end
-    false
+    an
   end
 
   # my_none
@@ -152,9 +154,9 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
 
   # my_method3
   def check_class(paramet, arr)
-    an = false
+    an = true
     if paramet.nil?
-      arr.my_each { |n| return false if !n == false && !n.nil? }
+      arr.my_each { |n| an = false if !n == false && !n.nil? }
     else
       an = check_class_helper(paramet, arr)
     end
@@ -162,14 +164,15 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   def check_class_helper(paramet, arr)
+    an = true
     if paramet.is_a?(Regexp)
-      arr.my_each { |x| return false if x.match?(paramet) }
+      arr.my_each { |x| an = false if x.match?(paramet) }
     elsif paramet.is_a?(Class)
-      arr.my_each { |x| return false if x.is_a?(paramet) }
+      arr.my_each { |x| an = false if x.is_a?(paramet) }
     else
-      arr.my_each { |x| return false if x == paramet }
+      arr.my_each { |x| an = false if x == paramet }
     end
-    true
+    an
   end
 
   # my_count
