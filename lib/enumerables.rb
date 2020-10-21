@@ -72,7 +72,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
 
   # my_method1
   def check_regx(paramet, arr)
-    an = false
+    an = true
     if paramet.nil?
       arr.my_each { |n| return false if n.nil? || !n }
     else
