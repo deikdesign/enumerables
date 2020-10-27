@@ -69,7 +69,7 @@ describe Enumerable do
     end
 
     it 'return true when all values are true ' do
-      expect(range.my_all? { |n| n == 0 }).to eql true
+      expect(range.my_all?(&:zero?)).to eql true
     end
 
     it 'return true when all values are true in a hash' do
@@ -87,7 +87,7 @@ describe Enumerable do
     end
 
     it 'return false when no value is true on the array' do
-      expect(array.my_any? { |n| n > 6}).to eql FALSE
+      expect(array.my_any? { |n| n > 6 }).to eql FALSE
     end
 
     it 'return true when any value is true on the range' do
