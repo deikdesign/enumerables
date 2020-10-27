@@ -63,6 +63,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
       arr.my_each do |n|
         ans = yield n
         return false if ans == false
+        return true if ans == true
       end
     else
       an = check_regx(paramet, arr)
@@ -221,7 +222,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
 
   def check_signs(int, sec)
     return true if (!int.nil? && sec.nil?) && (int.is_a?(Symbol) || int.is_a?(String))
-
     false
   end
 end

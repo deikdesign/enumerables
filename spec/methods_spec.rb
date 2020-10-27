@@ -24,13 +24,13 @@ describe Enumerable do
 
   describe '#my_each_with_index' do
     it 'return correct array' do
-      expect(hash.my_each_with_index { |i, ind| i}).to eql(hash)
+      expect(hash.my_each_with_index { |i, _ind| i }).to eql(hash)
     end
     it 'check if it is accepting range' do
-      expect(range.my_each_with_index { |i, ind| i > 2}).to eql(range)
+      expect(range.my_each_with_index { |i, _ind| i > 2 }).to eql(range)
     end
     it 'check if it is accepting hash' do
-      expect(hash.my_each_with_index { |i, ind| i}).to eql(hash)
+      expect(hash.my_each_with_index { |i, _ind| i}).to eql(hash)
     end
     it 'when block is not given return Enumerator' do
       expect(array.my_each_with_index).to be_an(Enumerator)
@@ -51,33 +51,33 @@ describe Enumerable do
     end
 
     it 'returns an array into a hash' do
-      expect(hash.my_select { |num, value| value > 2}).to eql([])
+      expect(hash.my_select { |_num, value| value > 2}).to eql([[:c, 3]])
     end
   end
 
   describe '#my_all' do
     it 'if all value for an array are true return true' do
-      expect(array.my_all? { |n| n > 2}).to eql FALSE
+      expect(array.my_all? { |n| n > 2}).to eql false
     end
 
     it 'if all value are false for an array return false' do
-      expect(array.my_all? { |n| n > 6}).to eql FALSE
+      expect(array.my_all? { |n| n > 6}).to eql false
     end
 
     it 'return false when one value is false in a range' do
-      expect(hash.my_all? { |n| n > 2 }).to eql FALSE
+      expect(range.my_all? { |n| n > 2 }).to eql false
     end
 
-    it 'return true when all values are true in a range' do
-      expect(hash.my_all? { |n| n > 6 }).to eql TRUE
+    it 'return true when all values are true ' do
+      expect(range.my_all? { |n| n == 0 }).to eql true
     end
 
     it 'return true when all values are true in a hash' do
-      expect(hash.my_all? { |_key, value| value > 7 }).to eql TRUE
+      expect(hash.my_all? { |n| n <=> 0 }).to eql true
     end
 
-    it 'return false when one value is false in a range' do
-      expect(hash.my_all? { |_key, value| value > 3 }).to eql TRUE
+    it 'return false when one value is false in a hash' do
+      expect(hash.my_all? { |n| n == 3 }).to eql false
     end
   end
 
@@ -99,11 +99,11 @@ describe Enumerable do
     end
 
     it 'return false when any value is true on a hash' do
-      expect(range.my_any? { |_key, value| value > 2}).to eql TRUE
+      expect(hash.my_any? { |_n, value| value > 2}).to eql TRUE
     end
 
     it 'return false when no value is true on a hash' do
-      expect(range.my_any? { |_key, value| value > 6}).to eql false
+      expect(hash.my_any? { |_n, value| value > 6}).to eql false
     end
   end
 
@@ -135,19 +135,19 @@ describe Enumerable do
 
   describe '#my_count?' do
     it 'return to an array when no block  and no argument are given' do
-      expect(array.my_count?).to eql(5)
+      expect(array.my_count).to eql(5)
     end
 
     it 'elements in a range when no block  and no argument are given' do
-      expect(range.my_count?).to eql(6)
+      expect(range.my_count).to eql(6)
     end
 
     it 'elements in a hash when no block  and no argument are given' do
-      expect(hash.my_count?).to eql(3)
+      expect(hash.my_count).to eql(3)
     end
 
     it 'return elements when block is given' do
-      expect(array.my_count? { |x| x == 2}).to eql(1)
+      expect(array.my_count { |x| x == 2}).to eql(1)
     end
 
     it 'return elements are equal to arg value' do
@@ -191,7 +191,7 @@ describe Enumerable do
     end
 
     it 'inject arr if the block is given' do
-      expect(array.my_inject { |sum, num| sum + num }).to eql 15
+      expect(array.my_inject { |item, int| item + int }).to eql 15
     end
 
     it 'inject range if the block is given' do
