@@ -91,7 +91,7 @@ describe Enumerable do
     end
 
     it 'return true when any value is true on the range' do
-      expect(range.my_any? { |n| n > 2}).to eql true
+      expect(range.my_any? { |n| n > 2 }).to eql true
     end
 
     it 'return false when no value is true on the range' do
