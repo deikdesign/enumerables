@@ -24,13 +24,13 @@ describe Enumerable do
 
   describe '#my_each_with_index' do
     it 'return correct array' do
-      expect(hash.my_each_with_index { |i, ind| i }).to eql(hash)
+      expect(hash.my_each_with_index { |i| i }).to eql(hash)
     end
     it 'check if it is accepting range' do
-      expect(range.my_each_with_index { |i, ind| i > 2 }).to eql(range)
+      expect(range.my_each_with_index { |i| i > 2 }).to eql(range)
     end
     it 'check if it is accepting hash' do
-      expect(hash.my_each_with_index { |i, ind| i }).to eql(hash)
+      expect(hash.my_each_with_index { |i| i }).to eql(hash)
     end
     it 'when block is not given return Enumerator' do
       expect(array.my_each_with_index).to be_an(Enumerator)
@@ -99,11 +99,11 @@ describe Enumerable do
     end
 
     it 'return false when any value is true on a hash' do
-      expect(hash.my_any? { |n, value| value > 2 }).to eql true
+      expect(hash.my_any? { |n| n > 2 }).to eql true
     end
 
     it 'return false when no value is true on a hash' do
-      expect(hash.my_any? { |n, value| value > 6 }).to eql false
+      expect(hash.my_any? { |n| n > 6 }).to eql false
     end
   end
 
