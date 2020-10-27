@@ -83,23 +83,23 @@ describe Enumerable do
 
   describe '#my_any?' do
     it 'return true when any value is true on the array' do
-      expect(array.my_any? { |n| n > 2 }).to eql TRUE
+      expect(array.my_any? { |n| n > 2 }).to eql true
     end
 
     it 'return false when no value is true on the array' do
-      expect(array.my_any? { |n| n > 6 }).to eql FALSE
+      expect(array.my_any? { |n| n > 6 }).to eql false
     end
 
     it 'return true when any value is true on the range' do
-      expect(range.my_any? { |n| n > 2}).to eql TRUE
+      expect(range.my_any? { |n| n > 2}).to eql true
     end
 
     it 'return false when no value is true on the range' do
-      expect(range.my_any? { |n| n > 6}).to eql FALSE
+      expect(range.my_any? { |n| n > 6}).to eql false
     end
 
     it 'return false when any value is true on a hash' do
-      expect(hash.my_any? { |_n, value| value > 2}).to eql TRUE
+      expect(hash.my_any? { |_n, value| value > 2}).to eql true
     end
 
     it 'return false when no value is true on a hash' do
@@ -109,27 +109,27 @@ describe Enumerable do
 
   describe '#my_none?' do
     it 'return true when no value is true on an array' do
-      expect(range.my_none? { |n| n > 6}).to eql TRUE
+      expect(range.my_none? { |n| n > 6}).to eql true
     end
 
     it 'return true when any value is true on an array' do
-      expect(range.my_none? { |n| n > 2}).to eql FALSE
+      expect(range.my_none? { |n| n > 2}).to eql false
     end
 
     it 'return false when any value is true on a range' do
-      expect(range.my_none? { |n| n > 6}).to eql TRUE
+      expect(range.my_none? { |n| n > 6}).to eql true
     end
 
     it 'return false when any value is false on a range' do
-      expect(range.my_none? { |n| n > 2}).to eql FALSE
+      expect(range.my_none? { |n| n > 2}).to eql false
     end
 
     it 'return true when no value is true on a range' do
-      expect(range.my_none? { |key, _value| key > 6}).to eql TRUE
+      expect(range.my_none? { |key, _value| key > 6}).to eql true
     end
 
     it 'return true when all values are false on the hash' do
-      expect(range.my_none? { |key, _value| key > 6}).to eql TRUE
+      expect(range.my_none? { |key, _value| key > 6}).to eql true
     end
   end
 
