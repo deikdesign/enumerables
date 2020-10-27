@@ -24,13 +24,13 @@ describe Enumerable do
 
   describe '#my_each_with_index' do
     it 'return correct array' do
-      expect(hash.my_each_with_index { |i, _ind| i }).to eql(hash)
+      expect(hash.my_each_with_index { |i, ind| i }).to eql(hash)
     end
     it 'check if it is accepting range' do
-      expect(range.my_each_with_index { |i, _ind| i > 2 }).to eql(range)
+      expect(range.my_each_with_index { |i, ind| i > 2 }).to eql(range)
     end
     it 'check if it is accepting hash' do
-      expect(hash.my_each_with_index { |i, _ind| i }).to eql(hash)
+      expect(hash.my_each_with_index { |i, ind| i }).to eql(hash)
     end
     it 'when block is not given return Enumerator' do
       expect(array.my_each_with_index).to be_an(Enumerator)
@@ -95,41 +95,41 @@ describe Enumerable do
     end
 
     it 'return false when no value is true on the range' do
-      expect(range.my_any? { |n| n > 6}).to eql false
+      expect(range.my_any? { |n| n > 6 }).to eql false
     end
 
     it 'return false when any value is true on a hash' do
-      expect(hash.my_any? { |_n, value| value > 2}).to eql true
+      expect(hash.my_any? { |n, value| value > 2 }).to eql true
     end
 
     it 'return false when no value is true on a hash' do
-      expect(hash.my_any? { |_n, value| value > 6}).to eql false
+      expect(hash.my_any? { |n, value| value > 6 }).to eql false
     end
   end
 
   describe '#my_none?' do
     it 'return true when no value is true on an array' do
-      expect(range.my_none? { |n| n > 6}).to eql true
+      expect(range.my_none? { |n| n > 6 }).to eql true
     end
 
     it 'return true when any value is true on an array' do
-      expect(range.my_none? { |n| n > 2}).to eql false
+      expect(range.my_none? { |n| n > 2 }).to eql false
     end
 
     it 'return false when any value is true on a range' do
-      expect(range.my_none? { |n| n > 6}).to eql true
+      expect(range.my_none? { |n| n > 6 }).to eql true
     end
 
     it 'return false when any value is false on a range' do
-      expect(range.my_none? { |n| n > 2}).to eql false
+      expect(range.my_none? { |n| n > 2 }).to eql false
     end
 
     it 'return true when no value is true on a range' do
-      expect(range.my_none? { |key, _value| key > 6}).to eql true
+      expect(range.my_none? { |key, _value| key > 6 }).to eql true
     end
 
     it 'return true when all values are false on the hash' do
-      expect(range.my_none? { |key, _value| key > 6}).to eql true
+      expect(range.my_none? { |key, _value| key > 6 }).to eql true
     end
   end
 
@@ -147,7 +147,7 @@ describe Enumerable do
     end
 
     it 'return elements when block is given' do
-      expect(array.my_count { |x| x == 2}).to eql(1)
+      expect(array.my_count { |x| x == 2 }).to eql(1)
     end
 
     it 'return elements are equal to arg value' do
@@ -157,11 +157,11 @@ describe Enumerable do
 
   describe '#my_map?' do
     it 'array for each element of an array' do
-      expect(array.my_map { |num| num * 2}).to eql([2, 4, 6, 8, 10])
+      expect(array.my_map { |num| num * 2 }).to eql([2, 4, 6, 8, 10])
     end
 
     it 'array for each element of a range' do
-      expect(range.my_map { |num| num * 2}).to eql([0, 2, 4, 6, 8, 10])
+      expect(range.my_map { |num| num * 2 }).to eql([0, 2, 4, 6, 8, 10])
     end
 
     it 'return to an Enumerator when there is not given block' do
