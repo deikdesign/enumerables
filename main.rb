@@ -21,16 +21,16 @@ puts '5-Test for my_any'
 puts [false, true].my_any?
 
 puts '6-Test for my_none'
-puts [1, 2, 3, 5].my_none? { |num| num < 1 }
+puts '[1, 2, 3, 5].my_none? { |num| num < 1 }'
 
 puts '7-Test for my_count'
-puts [1, 2, 3, 3, 4].my_count { |x| (x % 2).zero? }
+puts '[1, 2, 3, 3, 4].my_count { |x| (x % 2).zero? }'
 
 puts '8-Test for my_map'
-puts %w[h m a y].my_map { |x| x + '1' }
+puts '%w[h m a y].my_map { |x| x + 1 }'
 
 puts '9-Test for my_inject'
-puts [1, 2, 3, 4, 5].my_inject { |sum, num| sum + num }
+puts '[1, 2, 3, 4, 5].my_inject { |sum, num| sum + num }'
 
 puts '10-Test for multiply_els'
 puts multiply_els([2, 4, 5])

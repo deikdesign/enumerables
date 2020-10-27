@@ -30,7 +30,7 @@ describe Enumerable do
       expect(range.my_each_with_index { |i, _ind| i > 2 }).to eql(range)
     end
     it 'check if it is accepting hash' do
-      expect(hash.my_each_with_index { |i, _ind| i}).to eql(hash)
+      expect(hash.my_each_with_index { |i, _ind| i }).to eql(hash)
     end
     it 'when block is not given return Enumerator' do
       expect(array.my_each_with_index).to be_an(Enumerator)
@@ -43,25 +43,25 @@ describe Enumerable do
     end
 
     it 'returns to an array' do
-      expect(array.my_select { |num| num > 3}).to eql([4, 5])
+      expect(array.my_select { |num| num > 3 }).to eql([4, 5])
     end
 
     it 'returns an array into a range' do
-      expect(array.my_select { |num| num < 3}).to eql([1, 2])
+      expect(array.my_select { |num| num < 3 }).to eql([1, 2])
     end
 
     it 'returns an array into a hash' do
-      expect(hash.my_select { |_num, value| value > 2}).to eql([[:c, 3]])
+      expect(hash.my_select { |_num, value| value > 2 }).to eql([[:c, 3]])
     end
   end
 
   describe '#my_all' do
     it 'if all value for an array are true return true' do
-      expect(array.my_all? { |n| n > 2}).to eql false
+      expect(array.my_all? { |n| n > 2 }).to eql false
     end
 
     it 'if all value are false for an array return false' do
-      expect(array.my_all? { |n| n > 6}).to eql false
+      expect(array.my_all? { |n| n > 6 }).to eql false
     end
 
     it 'return false when one value is false in a range' do
@@ -83,7 +83,7 @@ describe Enumerable do
 
   describe '#my_any?' do
     it 'return true when any value is true on the array' do
-      expect(array.my_any? { |n| n > 2}).to eql TRUE
+      expect(array.my_any? { |n| n > 2 }).to eql TRUE
     end
 
     it 'return false when no value is true on the array' do

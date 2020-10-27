@@ -222,6 +222,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
 
   def check_signs(int, sec)
     return true if (!int.nil? && sec.nil?) && (int.is_a?(Symbol) || int.is_a?(String))
+
     false
   end
 end
