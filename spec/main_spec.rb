@@ -146,4 +146,10 @@ describe Enumerable do
       expect([5, 6, 7, 8, 9, 10].my_inject { |sum, n| sum + n }).to eql(45)
     end
   end
+
+  describe '#multiply_els' do
+    it 'multiply_els does multiplication on the elements given in argument and return its result' do
+      expect(multiply_els([5, 6, 7, 8, 9, 10])).to eql(45)
+    end
+  end
 end
