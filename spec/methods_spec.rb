@@ -98,12 +98,12 @@ describe Enumerable do
       expect(range.my_any? { |n| n > 6 }).to eql false
     end
 
-    it 'return false when any value is true on a hash' do
-      expect(hash.my_any? { |n| n > 2 }).to eql true
+    it 'return true when any value is true on a hash' do
+      expect(hash.my_any? { |_k_, v| v > 2 }).to eql true
     end
 
     it 'return false when no value is true on a hash' do
-      expect(hash.my_any? { |n| n > 6 }).to eql false
+      expect(hash.my_any? { |_k_, v| v < 0 }).to eql false
     end
   end
 
@@ -186,20 +186,16 @@ describe Enumerable do
       expect(array.my_inject(:*)).to eql 120
     end
 
-    it 'inject arr with vlaue and symbol' do
+    it 'inject arr with value and symbol' do
       expect(array.my_inject(1, :*)).to eql 120
     end
 
     it 'inject arr if the block is given' do
-      expect(array.my_inject { |item, int| item + int }).to eql 15
+      expect(array.my_inject { |sum, num| sum + num }).to eql 15
     end
 
-    it 'inject range if the block is given' do
-      expect(range.my_inject { |sum, num| sum + num }).to eql 15
-    end
-
-    it 'inject enumerator if arg is given' do
-      expect(range.my_inject).to be_an(Enumerator)
+    it 'inject range if the block is not given' do
+      expect(range.my_inject { |num| num == false }).to eql false
     end
   end
 end
