@@ -63,6 +63,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
       arr.my_each do |n|
         ans = yield n
         return false if ans == false
+        return true if ans == true
       end
     else
       an = check_regx(paramet, arr)
